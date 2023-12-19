@@ -5,10 +5,11 @@ This repository stores public data and all codes used for this paper.
 # Description
 
 ## Data
-- The public data are stored under `0_raw_data`.
+- The raw data are stored under `0_raw_data`.
+- Drug product characteristics were manually collected. Medical school characteristics and US zip codes are publicly available. We provide these datasets in this repository.
 - The prescription data require data use agreements with IQVIA and are not included in this repository.
 
-## Computational Requirements
+## Computational requirements
 - All programs were written in R (version 3.6.0) and run on Kellogg Linux Cluster.
 
 ## How to run the programs
