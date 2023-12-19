@@ -18,5 +18,5 @@ This repository stores public data and all codes used for this paper.
 Rscript codes/0_run_all.R
 ```
 - All working datasets should be derived under `1_data`.
-- All tables in the table should be available under `2_results`.
+- All tables in the paper should be available under `2_results`.
 - Users can use `notes/tables.lyx` for the assembled tables.
