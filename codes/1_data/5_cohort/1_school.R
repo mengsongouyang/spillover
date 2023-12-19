@@ -61,7 +61,7 @@ main <- function() {
                                                    "Canada and Carribean", "other foreign"))
 
   # Output
-  fwrite(school, sprintf("%s/school.csv", data_path))
+  fwrite(school, sprintf("%s/school.csv", cohort_path))
 }
 
 # Execute

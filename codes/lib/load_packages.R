@@ -9,7 +9,8 @@ packages <- c("data.table",
               "janitor", 
               "fixest",  # Fast fixed effects
               "modelr", 
-              "stargazer")
+              "stargazer", 
+              "haven")
 
 # Load or install&load all
 package.check <- lapply(
