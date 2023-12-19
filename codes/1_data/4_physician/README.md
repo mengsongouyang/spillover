@@ -1,0 +1,1 @@
+This directory stores codes that keeps only physicians in the provider sample

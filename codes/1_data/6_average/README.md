@@ -1,0 +1,1 @@
+This directory stores codes that compute the leave-physician-out zip3 average, the training variable, and the spillover variable.
