@@ -6,7 +6,7 @@ options(warn   = -1,
 specialty_label_list <- c("psych", "nonpsych")
 
 # Set paths
-setwd("/kellogg/proj/mks401/linda_projects")  # Change the directory to your local root directory
+# NB: Change the directory to the root directory before running programs
 lib_path <- "codes/lib"
 source(sprintf("%s/set_paths.R",  lib_path))
 
