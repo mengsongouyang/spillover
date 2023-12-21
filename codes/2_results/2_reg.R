@@ -6,6 +6,7 @@ print(sprintf("Start: %s", message))
 main <- function() {
   med_year_l <- 1966  # 1966 is included as an extreme year
   med_year_h <- 2014  # 2014 is excluded from the extreme year
+  
   for (specialty_label in specialty_label_list) {
     print(specialty_label)
     
@@ -180,7 +181,7 @@ get_each_type_tables <- function(data, specialty_label) {
               "PAT_ZIP3"         = "Patient Zip3", 
               "patient_age"      = "Patient Age", 
               "femaleTRUE"       = "Female Patient", 
-              "prov_zip3"   = "Physician Zip3")
+              "prov_zip3"        = "Physician Zip3")
   
   myOrder <- c("Zip Residuals", "Training", "Spillover")
   
