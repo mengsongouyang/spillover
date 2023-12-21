@@ -38,6 +38,7 @@ merge_data <- function(first_kid_prescript, kid_pat_loc, physician, phy_avg, spe
 
   data <- first_kid_prescript  %>%
     filter(PROVIDER_ID %in% physician$PROVIDER_ID)  %>%
+    fmutate(PATIENT_ID = as.numeric(PATIENT_ID))  %>%
     inner_join(kid_pat_loc, by = c("PATIENT_ID",  "service_yr"))  %>%
     inner_join(phy_avg,     by = c("PROVIDER_ID", "service_yr"))  %>%
     fselect(PATIENT_ID, service_yr, PROVIDER_ID, 

@@ -118,7 +118,7 @@ get_red_tables <- function(data, specialty_label) {
     panel <- "B"
   }
   
-  etable(list(reg1, reg2, reg3),
+  tab <- etable(list(reg1, reg2, reg3),
          drop      = "Const",
          dict      = myDict,
          order     = myOrder,
@@ -129,6 +129,7 @@ get_red_tables <- function(data, specialty_label) {
          fitstat   = c("n", "my", "ar2"), 
          digits    = "r3",
          extralines = )
+  print(tab)
 }
 
 get_each_type_tables <- function(data, specialty_label) {
@@ -153,9 +154,9 @@ get_each_type_tables <- function(data, specialty_label) {
            spill   = tri_spill)
   
   ben_data <- data  %>%
-    rename(zip_res = FA_zip_res, 
-           cohort  = FA_cohort, 
-           spill   = FA_spill)
+    rename(zip_res = ben_zip_res, 
+           cohort  = ben_cohort, 
+           spill   = ben_spill)
   
   poly_data <- data  %>%
     rename(zip_res = poly_zip_res, 
@@ -191,7 +192,7 @@ get_each_type_tables <- function(data, specialty_label) {
     panel <- "B"
   }
   
-  etable(list(reg1, reg2, reg3, reg4),
+  tab <- etable(list(reg1, reg2, reg3, reg4),
          drop      = "Const",
          dict      = myDict,
          order     = myOrder,
@@ -202,6 +203,7 @@ get_each_type_tables <- function(data, specialty_label) {
          fitstat   = c("n", "my", "ar2"), 
          digits    = "r3",
          extralines = )
+  print(tab)
 }
 
 # Execute

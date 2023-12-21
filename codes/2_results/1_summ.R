@@ -25,6 +25,10 @@ main <- function() {
   rownames(nonpsych_tab) <- rownames_list
   
   # Output
+  print("Table 1A")
+  print(psych_tab)
+  print("Table 1B")
+  print(nonpsych_tab)
   output_table(psych_tab,    "Summ Stats for Psychiatists",      digits = 3, results_path, "Table1A", T)
   output_table(nonpsych_tab, "Summ Stats for Non-psychiatrists", digits = 3, results_path, "Table1B", T)
 }

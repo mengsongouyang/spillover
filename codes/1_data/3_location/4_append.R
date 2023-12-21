@@ -16,6 +16,9 @@ main <- function() {
 
 get_kid_pat_loc <- function(first_kid_patient) {
   # Append the children patients' location over years
+  first_kid_patient <- first_kid_patient  %>%
+    fmutate(PATIENT_ID = as.numeric(PATIENT_ID))
+  
   pat_loc <- NULL
   for (yr in yr_list) {
     print(yr)
