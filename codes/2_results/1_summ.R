@@ -25,8 +25,8 @@ main <- function() {
   rownames(nonpsych_tab) <- rownames_list
   
   # Output
-  output_table(psych_tab,   "Summ Stats for Psychiatists",      results_path, "Table1A", T)
-  output_table(cohort_summ, "Summ Stats for Non-psychiatrists", results_path, "Table1B", T)
+  output_table(psych_tab,    "Summ Stats for Psychiatists",      digits = 3, results_path, "Table1A", T)
+  output_table(nonpsych_tab, "Summ Stats for Non-psychiatrists", digits = 3, results_path, "Table1B", T)
 }
 
 get_summ <- function(specialty_label) {
@@ -122,22 +122,10 @@ summ_acrs_group <- function(data) {
     mutate(n = n)
   colnames(summ) <- c("mean", "sd", "n")
   summ <- summ  %>% 
-    fselect(n, mean, sd)
-  
-  vars_summ <- summ[1:4, ]
-  sh_summ   <- summ[5:9, ]
-  
-  vars_summ <- vars_summ  %>%
-    fmutate(mean = round(mean, digits = 2), 
-            sd   = round(sd,   digits = 2), 
-            n    = round(n,    digits = 0))
-  
-  sh_summ <- sh_summ  %>%
+    fselect(n, mean, sd)  %>%
     fmutate(mean = round(mean, digits = 3), 
             sd   = round(sd,   digits = 3), 
-            n    = round(n,    digits = 0))
-  
-  summ <- rbindlist(list(vars_summ, sh_summ))  %>%
+            n    = round(n,    digits = 0))  %>%
     return()
 }
 

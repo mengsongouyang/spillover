@@ -5,11 +5,16 @@ print(sprintf("Start: %s", message))
 
 main <- function() {
   # Load data
+  # First prescription of children patients
   first_kid_prescript <- fread(sprintf("%s/first_kid_prescript.csv",       first_kid_patient_path))
+  # Location of children patients
   kid_pat_loc         <- fread(sprintf("%s/patient/kid_pat_loc.csv",       location_path))
+  # Cleaned physician data
   physician           <- fread(sprintf("%s/physician.csv",                 physician_path))
+  # Average variables
   phy_avg_psych       <- fread(sprintf("%s/psych/phy_avg_psych.csv",       phy_avg_path))
   phy_avg_nonpsych    <- fread(sprintf("%s/nonpsych/phy_avg_nonpsych.csv", phy_avg_path))
+  
   
   # Merge data
   psych    <- merge_data(first_kid_prescript, kid_pat_loc, physician, phy_avg_psych,    "psych")
@@ -27,8 +32,12 @@ merge_data <- function(first_kid_prescript, kid_pat_loc, physician, phy_avg, spe
   } else if (specialty_label == "nonpsych") {
     physician <- physician  %>% filter(! PRI_SPCL_DESC %in% psychiatrist)
   }
+  
+  kid_pat_loc <- kid_pat_loc  %>%
+    fmutate(PATIENT_ID = as.numeric(PATIENT_ID))
 
   data <- first_kid_prescript  %>%
+    filter(PROVIDER_ID %in% physician$PROVIDER_ID)  %>%
     inner_join(kid_pat_loc, by = c("PATIENT_ID",  "service_yr"))  %>%
     inner_join(phy_avg,     by = c("PROVIDER_ID", "service_yr"))  %>%
     fselect(PATIENT_ID, service_yr, PROVIDER_ID, 

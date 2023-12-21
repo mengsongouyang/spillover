@@ -1,0 +1,39 @@
+
+\begin{table}[htbp]
+   \centering
+   \begin{threeparttable}[b]
+      \caption{Each type of prescription (Psychiatrists)}
+      \begin{tabular}{lcccc}
+         \tabularnewline \midrule \midrule
+         Dependent Variables:    & Too young      & Tricyclics     & Benzos        & Polypharmacy\\  
+         Model:                  & (1)            & (2)            & (3)           & (4)\\  
+         \midrule
+         \emph{Variables}\\
+         Zip Residuals           & 0.144$^{***}$  & 0.082$^{***}$  & -0.005$^{**}$ & 0.107$^{***}$\\   
+                                 & (0.012)        & (0.018)        & (0.002)       & (0.018)\\   
+         Training                & 0.111$^{***}$  & 0.118$^{***}$  & -0.012$^{*}$  & 0.096$^{*}$\\   
+                                 & (0.038)        & (0.045)        & (0.007)       & (0.054)\\   
+         Spillover               & 0.216$^{***}$  & 0.247$^{***}$  & 0.002         & 0.116\\   
+                                 & (0.069)        & (0.083)        & (0.012)       & (0.127)\\   
+         Patient Age             & -0.025$^{***}$ & -0.010$^{***}$ & 0.000$^{***}$ & 0.006$^{***}$\\   
+                                 & (0.000)        & (0.000)        & (0.000)       & (0.000)\\   
+         Female Patient          & -0.049$^{***}$ & -0.027$^{***}$ & 0.001$^{***}$ & 0.016$^{***}$\\   
+                                 & (0.001)        & (0.001)        & (0.000)       & (0.001)\\   
+         \midrule
+         \emph{Fixed-effects}\\
+         Year                    & Yes            & Yes            & Yes           & Yes\\  
+         Patient Zip3            & Yes            & Yes            & Yes           & Yes\\  
+         Physician               & Yes            & Yes            & Yes           & Yes\\  
+         \midrule
+         \emph{Fit statistics}\\
+         Observations            & 2,997,881      & 2,997,881      & 2,997,881     & 2,997,881\\  
+         Dependent variable mean & 0.42959        & 0.06814        & 0.01956       & 0.05244\\  
+         Adjusted R$^2$          & 0.18359        & 0.15392        & 0.10593       & 0.06553\\  
+         \midrule \midrule
+         \multicolumn{5}{l}{\emph{Clustered (Physician Zip3) standard-errors in parentheses}}\\
+         \multicolumn{5}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+      \end{tabular}
+   \end{threeparttable}
+\end{table}
+
+

@@ -20,6 +20,7 @@ get_kid_pat_loc <- function(first_kid_patient) {
   for (yr in yr_list) {
     print(yr)
     pat_loc_new <- fread(sprintf("%s/patient/%s.csv", location_path, yr))  %>%
+      fmutate(PATIENT_ID = as.numeric(PATIENT_ID))  %>%
       filter(PATIENT_ID %in% first_kid_patient$PATIENT_ID)  %>%
       fmutate(service_yr = as.numeric(yr))
     pat_loc <- rbindlist(list(pat_loc, pat_loc_new))

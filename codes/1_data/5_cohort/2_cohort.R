@@ -5,8 +5,8 @@ print(sprintf("Start: %s", message))
 
 main <- function() {
   # Load data
-  physician <- fread(sprintf("%s/physician.csv", physician_path))
-  school    <- fread(sprintf("%s/school.csv",    cohort_path))
+  physician <- fread(sprintf("%s/physician.csv", physician_path))  # Cleaned physician data
+  school    <- fread(sprintf("%s/school.csv",    cohort_path))     # Cleaned school data
   
   # Get the cohort of each physician
   phy_cohort <- physician  %>%

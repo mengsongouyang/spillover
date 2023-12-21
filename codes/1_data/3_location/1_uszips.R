@@ -20,7 +20,7 @@ clean_uszips <- function(uszips) {
     row_to_names(row_number = 1)  %>%
     fselect(Geo_ZCTA3)  %>%
     funique()  %>%
-    fmutate(Geo_ZCTA3 = as.numeric(Geo_ZCTA3))  %>%
+    fmutate(Geo_ZCTA3 = as.numeric(as.character(Geo_ZCTA3)))  %>%
     rename(zip3 = Geo_ZCTA3)  %>%
     return()
 }

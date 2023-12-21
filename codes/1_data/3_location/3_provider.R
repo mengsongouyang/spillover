@@ -27,13 +27,15 @@ get_prov_loc <- function(yr) {
   rm(AA_prescript, AD_prescript)  # Release memory
   
   # Load cleaned patient location data
-  pat_loc <- fread(sprintf("%s/patient/%s.csv", location_path, yr))
+  pat_loc <- fread(sprintf("%s/patient/%s.csv", location_path, yr))  %>%
+    fmutate(PATIENT_ID = as.numeric(PATIENT_ID))
   
   # Keep (provider, PAT_ZIP3) w/ most patients
   prov_loc <- prescript  %>%
     fselect(PROVIDER_ID, PATIENT_ID, PAT_ZIP3)  %>%  # PAT_ZIP3 is the variable name for the patient's Zip3
     filter(PROVIDER_ID != 0)  %>%
     filter(! is.na(PAT_ZIP3))  %>%
+    fmutate(PATIENT_ID = as.numeric(PATIENT_ID))  %>%
     fgroup_by(PROVIDER_ID, PATIENT_ID)  %>%
     fsummarise(n_prescript = fnobs(PATIENT_ID))  %>%  # Get the num of prescriptions for each (provider, patient) pair
     fungroup()  %>%
