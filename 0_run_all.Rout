@@ -1,0 +1,659 @@
+
+R version 3.6.0 (2019-04-26) -- "Planting of a Tree"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> # This script serves as a main script that runs all scripts.
+> 
+> # Setting(s)
+> options(warn   = -1, 
++         scipen = 999)
+> specialty_label_list <- c("psych", "nonpsych")
+> 
+> # Set paths
+> # NB: Change the directory to the root directory before running programs
+> lib_path <- "codes/lib"
+> source(sprintf("%s/set_paths.R",  lib_path))
+> 
+> # Create directories to store cleaned data and results
+> source(sprintf("%s/create_dir.R", lib_path))
+> 
+> # Load packages
+> source(sprintf("%s/load_packages.R", lib_path))
+Loading required package: data.table
+Loading required package: tidyverse
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::between()     masks data.table::between()
+✖ dplyr::filter()      masks stats::filter()
+✖ dplyr::first()       masks data.table::first()
+✖ lubridate::hour()    masks data.table::hour()
+✖ lubridate::isoweek() masks data.table::isoweek()
+✖ dplyr::lag()         masks stats::lag()
+✖ dplyr::last()        masks data.table::last()
+✖ lubridate::mday()    masks data.table::mday()
+✖ lubridate::minute()  masks data.table::minute()
+✖ lubridate::month()   masks data.table::month()
+✖ lubridate::quarter() masks data.table::quarter()
+✖ lubridate::second()  masks data.table::second()
+✖ purrr::transpose()   masks data.table::transpose()
+✖ lubridate::wday()    masks data.table::wday()
+✖ lubridate::week()    masks data.table::week()
+✖ lubridate::yday()    masks data.table::yday()
+✖ lubridate::year()    masks data.table::year()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: readstata13
+Loading required package: xlsx
+Loading required package: collapse
+collapse 1.9.6, see ?`collapse-package` or ?`collapse-documentation`
+
+Attaching package: ‘collapse’
+
+The following object is masked from ‘package:lubridate’:
+
+    is.Date
+
+The following object is masked from ‘package:stats’:
+
+    D
+
+Loading required package: xtable
+Loading required package: janitor
+
+Attaching package: ‘janitor’
+
+The following objects are masked from ‘package:stats’:
+
+    chisq.test, fisher.test
+
+Loading required package: fixest
+
+Attaching package: ‘fixest’
+
+The following object is masked from ‘package:collapse’:
+
+    fdim
+
+Loading required package: modelr
+Loading required package: stargazer
+
+Please cite as: 
+
+ Hlavac, Marek (2022). stargazer: Well-Formatted Regression and Summary Statistics Tables.
+ R package version 5.2.3. https://CRAN.R-project.org/package=stargazer 
+
+Loading required package: haven
+> 
+> # Load library functions
+> source(sprintf("%s/load_lib_fn.R", lib_path))
+> 
+> # Construct the dataset from raw data
+> source(sprintf("%s/1_product/1_merge.R",                         codes_data_path))
+[1] "Start: Clean the drug products."
+[1] "Drug type: AD"
+[1] "Drug type: AA"
+[1] "Finish: Clean the drug products."
+> source(sprintf("%s/2_first_kid_patient/1_young_patient.R",       codes_data_path))
+[1] "Start: Get the list of young patients."
+[1] "Drug type: AD"
+[1] "Drug type: AA"
+[1] "Finish: Get the list of young patients."
+> source(sprintf("%s/2_first_kid_patient/2_all_prescript.R",       codes_data_path))
+[1] "Start: Extract prescriptions of children patients."
+[1] "Drug type: AD"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "Drug type: AA"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "Finish: Extract prescriptions of children patients."
+> source(sprintf("%s/2_first_kid_patient/3_first_mon_prescript.R", codes_data_path))
+[1] "Start: Keep kids' first month of prescriptions."
+[1] "Drug type: AD"
+[1] "Drug type: AA"
+[1] "Start: Keep kids' first month of prescriptions."
+> source(sprintf("%s/2_first_kid_patient/4_red_flag.R",            codes_data_path))
+[1] "Start: Gen vars for red-flag prescriptions."
+[1] "Finish: Gen vars for red-flag prescriptions."
+> source(sprintf("%s/3_location/1_uszips.R",                       codes_data_path))
+[1] "Start: Clean uszip3 data."
+[1] "Finish: Clean uszip3 data."
+> source(sprintf("%s/3_location/2_patient.R",                      codes_data_path))
+[1] "Start: Get patients' locations"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "Finish: Get patients' locations"
+> source(sprintf("%s/3_location/3_provider.R",                     codes_data_path))
+[1] "Start: Get providers' locations"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "Finish: Get providers' locations"
+> source(sprintf("%s/3_location/4_append.R",                       codes_data_path))
+[1] "Start: Append kids' locations over years"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "Finish: Append kids' locations over years"
+> source(sprintf("%s/4_physician/1_physician.R",                   codes_data_path))
+[1] "Start: Keep only physicians in the provider sample."
+[1] "Finish: Keep only physicians in the provider sample."
+> source(sprintf("%s/5_cohort/1_school.R",                         codes_data_path))
+[1] "Start: Clean school data"
+[1] "Finish: Clean school data"
+> source(sprintf("%s/5_cohort/2_cohort.R",                         codes_data_path))
+[1] "Start: Get the cohort of each physician"
+[1] "Finish: Get the cohort of each physician"
+> source(sprintf("%s/6_average/1_phy_n_prescript.R",               codes_data_path))
+[1] "Start: Get the num of prescriptions of each (physician, year)"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "Finish: Get the num of prescriptions of each (physician, year)"
+> source(sprintf("%s/6_average/2_zip.R",                           codes_data_path))
+[1] "Start: Compute the sums at the (zip, year) level"
+[1] "psych"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "nonpsych"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "Finish: Compute the sums at the (zip, year) level"
+> source(sprintf("%s/6_average/3_cohort.R",                        codes_data_path))
+[1] "Start: Compute the sums at the (cohort, year) and (cohort, zip, year) levels"
+[1] "psych"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "nonpsych"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "Finish: Compute the sums at the (cohort, year) and (cohort, zip, year) levels"
+> source(sprintf("%s/6_average/4_phy_avg.R",                       codes_data_path))
+[1] "Start: Compute the averages at the physician level."
+[1] "psych"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "nonpsych"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "Finish: Compute the averages at the physician level."
+> source(sprintf("%s/6_average/5_append.R",                        codes_data_path))
+[1] "Start: Append the averages over years."
+[1] "psych"
+[1] "zip"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "cohort"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "phy_avg"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "nonpsych"
+[1] "zip"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "cohort"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "phy_avg"
+[1] "2006"
+[1] "2007"
+[1] "2008"
+[1] "2009"
+[1] "2010"
+[1] "2011"
+[1] "2012"
+[1] "2013"
+[1] "2014"
+[1] "2015"
+[1] "2016"
+[1] "2017"
+[1] "2018"
+[1] "Finish: Append the averages over years."
+> source(sprintf("%s/7_merge/1_merge.R",                           codes_data_path))
+[1] "Start: Merge all datasets."
+[1] "Finish: Merge all datasets."
+> 
+> # Analyze the cleaned datasets
+> source(sprintf("%s/1_summ.R", codes_results_path))
+[1] "Start: Get Table 1"
+[1] "psych"
+[1] "nonpsych"
+[1] "Table 1A"
+         Zip N Zip Mean  Zip Std Cohort N Cohort Mean Cohort Std
+N Phy      880   28.872   46.305      156     171.141    107.332
+N Pat      880  945.513 1288.595      156    5456.233   4792.617
+N Pres     880 4074.060 5555.211      156   23383.248  20494.480
+Pat/Phy    880   36.311   21.328      156      27.065     11.520
+Sh Red     880    0.485    0.118      156       0.416      0.074
+Sh Young   880    0.468    0.117      156       0.400      0.071
+Sh Tri     880    0.086    0.068      156       0.062      0.021
+Sh Ben     880    0.023    0.022      156       0.023      0.012
+Sh Poly    880    0.067    0.043      156       0.058      0.009
+[1] "Table 1B"
+         Zip N Zip Mean  Zip Std Cohort N Cohort Mean Cohort Std
+N Phy      889  192.314  200.170      156    1150.476    805.638
+N Pat      889  939.693 1059.764      156    5512.922   4347.009
+N Pres     889 3268.462 3815.424      156   19024.484  15912.229
+Pat/Phy    889    4.841    1.759      156       4.377      1.228
+Sh Red     889    0.515    0.091      156       0.506      0.074
+Sh Young   889    0.418    0.083      156       0.395      0.070
+Sh Tri     889    0.158    0.062      156       0.166      0.040
+Sh Ben     889    0.081    0.052      156       0.081      0.035
+Sh Poly    889    0.026    0.012      156       0.024      0.004
+[1] "Finish: Get Table 1"
+> source(sprintf("%s/2_reg.R",  codes_results_path))
+[1] "Start: Get Tables 2-4"
+[1] "psych"
+
+% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
+% Date and time: Thu, Dec 21, 2023 - 11:27:48 PM
+\begin{table}[!htbp] \centering 
+  \caption{Zip Avg on Training and Spillover (Psychiatrists)} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+ & Zip Avg \\ 
+\hline \\[-1.8ex] 
+ Training & 0.098$^{***}$ \\ 
+  & (0.001) \\ 
+  & \\ 
+ Spillover & 0.860$^{***}$ \\ 
+  & (0.002) \\ 
+  & \\ 
+\hline \\[-1.8ex] 
+Dep Mean & 0.444 \\ 
+Observations & 2,997,881 \\ 
+Adjusted R$^{2}$ & 0.150 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table} 
+\begin{table}[htbp]
+   \centering
+   \begin{threeparttable}[b]
+      \caption{Any red-flag (Psychiatrists)}
+      \begin{tabular}{lccc}
+         \tabularnewline \midrule \midrule
+         Dependent Variable: & \multicolumn{3}{c}{Any red-flag}\\
+         Model:                  & (1)            & (2)            & (3)\\  
+         \midrule
+         \emph{Variables}\\
+         Zip Residuals           & 0.181$^{***}$  & 0.142$^{***}$  &   \\   
+                                 & (0.021)        & (0.013)        &   \\   
+         Training                & 0.844$^{***}$  & 0.121$^{***}$  & 0.106$^{***}$\\   
+                                 & (0.045)        & (0.037)        & (0.037)\\   
+         Spillover               & 0.471$^{***}$  & 0.200$^{***}$  & 0.180$^{**}$\\   
+                                 & (0.094)        & (0.067)        & (0.071)\\   
+         Patient Age             & -0.023$^{***}$ & -0.023$^{***}$ & -0.023$^{***}$\\   
+                                 & (0.000)        & (0.000)        & (0.000)\\   
+         Female Patient          & -0.057$^{***}$ & -0.050$^{***}$ & -0.050$^{***}$\\   
+                                 & (0.001)        & (0.001)        & (0.001)\\   
+         \midrule
+         \emph{Fixed-effects}\\
+         Year                    & Yes            & Yes            & Yes\\  
+         Patient Zip3            & Yes            & Yes            & Yes\\  
+         Physician               &                & Yes            & Yes\\  
+         \midrule
+         \emph{Fit statistics}\\
+         Observations            & 2,997,881      & 2,997,881      & 2,997,881\\  
+         Dependent variable mean & 0.44027        & 0.44027        & 0.44027\\  
+         Adjusted R$^2$          & 0.08035        & 0.18143        & 0.18122\\  
+         \midrule \midrule
+         \multicolumn{4}{l}{\emph{Clustered (Physician Zip3) standard-errors in parentheses}}\\
+         \multicolumn{4}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+      \end{tabular}
+   \end{threeparttable}
+\end{table}
+\begin{table}[htbp]
+   \centering
+   \begin{threeparttable}[b]
+      \caption{Each type of prescription (Psychiatrists)}
+      \begin{tabular}{lcccc}
+         \tabularnewline \midrule \midrule
+         Dependent Variables:    & Too young      & Tricyclics     & Benzos        & Polypharmacy\\  
+         Model:                  & (1)            & (2)            & (3)           & (4)\\  
+         \midrule
+         \emph{Variables}\\
+         Zip Residuals           & 0.144$^{***}$  & 0.082$^{***}$  & 0.030$^{***}$ & 0.107$^{***}$\\   
+                                 & (0.012)        & (0.018)        & (0.008)       & (0.018)\\   
+         Training                & 0.111$^{***}$  & 0.118$^{***}$  & 0.033         & 0.096$^{*}$\\   
+                                 & (0.038)        & (0.045)        & (0.027)       & (0.054)\\   
+         Spillover               & 0.216$^{***}$  & 0.247$^{***}$  & -0.036        & 0.116\\   
+                                 & (0.069)        & (0.083)        & (0.051)       & (0.127)\\   
+         Patient Age             & -0.025$^{***}$ & -0.010$^{***}$ & 0.000$^{***}$ & 0.006$^{***}$\\   
+                                 & (0.000)        & (0.000)        & (0.000)       & (0.000)\\   
+         Female Patient          & -0.049$^{***}$ & -0.027$^{***}$ & 0.001$^{***}$ & 0.016$^{***}$\\   
+                                 & (0.001)        & (0.001)        & (0.000)       & (0.001)\\   
+         \midrule
+         \emph{Fixed-effects}\\
+         Year                    & Yes            & Yes            & Yes           & Yes\\  
+         Patient Zip3            & Yes            & Yes            & Yes           & Yes\\  
+         Physician               & Yes            & Yes            & Yes           & Yes\\  
+         \midrule
+         \emph{Fit statistics}\\
+         Observations            & 2,997,881      & 2,997,881      & 2,997,881     & 2,997,881\\  
+         Dependent variable mean & 0.42959        & 0.06814        & 0.01956       & 0.05244\\  
+         Adjusted R$^2$          & 0.18359        & 0.15392        & 0.10594       & 0.06553\\  
+         \midrule \midrule
+         \multicolumn{5}{l}{\emph{Clustered (Physician Zip3) standard-errors in parentheses}}\\
+         \multicolumn{5}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+      \end{tabular}
+   \end{threeparttable}
+\end{table}
+[1] "nonpsych"
+
+% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
+% Date and time: Thu, Dec 21, 2023 - 11:28:57 PM
+\begin{table}[!htbp] \centering 
+  \caption{Zip Avg on Training and Spillover (Non-psychiatrists)} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+ & Zip Avg \\ 
+\hline \\[-1.8ex] 
+ Training & 0.040$^{***}$ \\ 
+  & (0.001) \\ 
+  & \\ 
+ Spillover & 0.985$^{***}$ \\ 
+  & (0.001) \\ 
+  & \\ 
+\hline \\[-1.8ex] 
+Dep Mean & 0.513 \\ 
+Observations & 4,015,856 \\ 
+Adjusted R$^{2}$ & 0.413 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table} 
+\begin{table}[htbp]
+   \centering
+   \begin{threeparttable}[b]
+      \caption{Any red-flag (Non-psychiatrists)}
+      \begin{tabular}{lccc}
+         \tabularnewline \midrule \midrule
+         Dependent Variable: & \multicolumn{3}{c}{Any red-flag}\\
+         Model:                  & (1)            & (2)            & (3)\\  
+         \midrule
+         \emph{Variables}\\
+         Zip Residuals           & 0.157$^{***}$  & 0.130$^{***}$  &   \\   
+                                 & (0.022)        & (0.012)        &   \\   
+         Training                & 0.804$^{***}$  & 0.177$^{***}$  & 0.176$^{***}$\\   
+                                 & (0.029)        & (0.026)        & (0.026)\\   
+         Spillover               & 0.108          & 0.386$^{***}$  & 0.486$^{***}$\\   
+                                 & (0.144)        & (0.095)        & (0.099)\\   
+         Patient Age             & -0.025$^{***}$ & -0.023$^{***}$ & -0.023$^{***}$\\   
+                                 & (0.000)        & (0.000)        & (0.000)\\   
+         Female Patient          & -0.005$^{***}$ & -0.007$^{***}$ & -0.007$^{***}$\\   
+                                 & (0.001)        & (0.001)        & (0.001)\\   
+         \midrule
+         \emph{Fixed-effects}\\
+         Year                    & Yes            & Yes            & Yes\\  
+         Patient Zip3            & Yes            & Yes            & Yes\\  
+         Physician               &                & Yes            & Yes\\  
+         \midrule
+         \emph{Fit statistics}\\
+         Observations            & 4,015,856      & 4,015,856      & 4,015,856\\  
+         Dependent variable mean & 0.52524        & 0.52524        & 0.52524\\  
+         Adjusted R$^2$          & 0.07491        & 0.28123        & 0.28112\\  
+         \midrule \midrule
+         \multicolumn{4}{l}{\emph{Clustered (Physician Zip3) standard-errors in parentheses}}\\
+         \multicolumn{4}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+      \end{tabular}
+   \end{threeparttable}
+\end{table}
+\begin{table}[htbp]
+   \centering
+   \begin{threeparttable}[b]
+      \caption{Each type of prescription (Non-psychiatrists)}
+      \begin{tabular}{lcccc}
+         \tabularnewline \midrule \midrule
+         Dependent Variables:    & Too young      & Tricyclics     & Benzos         & Polypharmacy\\  
+         Model:                  & (1)            & (2)            & (3)            & (4)\\  
+         \midrule
+         \emph{Variables}\\
+         Zip Residuals           & 0.126$^{***}$  & 0.087$^{***}$  & 0.129$^{***}$  & 0.041$^{***}$\\   
+                                 & (0.012)        & (0.012)        & (0.010)        & (0.014)\\   
+         Training                & 0.155$^{***}$  & 0.014          & 0.207$^{***}$  & 0.033\\   
+                                 & (0.031)        & (0.025)        & (0.025)        & (0.034)\\   
+         Spillover               & 0.623$^{***}$  & 0.107          & 0.408$^{***}$  & 0.389$^{*}$\\   
+                                 & (0.114)        & (0.095)        & (0.083)        & (0.210)\\   
+         Patient Age             & -0.036$^{***}$ & -0.003$^{***}$ & -0.006$^{***}$ & 0.001$^{***}$\\   
+                                 & (0.000)        & (0.000)        & (0.000)        & (0.000)\\   
+         Female Patient          & -0.026$^{***}$ & 0.009$^{***}$  & 0.001$^{**}$   & 0.002$^{***}$\\   
+                                 & (0.001)        & (0.001)        & (0.000)        & (0.000)\\   
+         \midrule
+         \emph{Fixed-effects}\\
+         Year                    & Yes            & Yes            & Yes            & Yes\\  
+         Patient Zip3            & Yes            & Yes            & Yes            & Yes\\  
+         Physician               & Yes            & Yes            & Yes            & Yes\\  
+         \midrule
+         \emph{Fit statistics}\\
+         Observations            & 4,015,856      & 4,015,856      & 4,015,856      & 4,015,856\\  
+         Dependent variable mean & 0.39742        & 0.20441        & 0.08106        & 0.01670\\  
+         Adjusted R$^2$          & 0.27577        & 0.39553        & 0.27063        & 0.04740\\  
+         \midrule \midrule
+         \multicolumn{5}{l}{\emph{Clustered (Physician Zip3) standard-errors in parentheses}}\\
+         \multicolumn{5}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+      \end{tabular}
+   \end{threeparttable}
+\end{table}
+[1] "Finish: Get Tables 2-4"
+> 
+> proc.time()
+     user    system   elapsed 
+35471.949  3492.724 36944.580 

@@ -4,17 +4,20 @@ message <- "Get the num of prescriptions of each (physician, year)"
 print(sprintf("Start: %s", message))
 
 main <- function() {
-  # Load data
+  # Load raw patient data
   AA_Patient <- read.dta13(sprintf("%s/AA/AA_Patient.dta", raw_iqvia_path))  %>% fselect(PATIENT_ID, PAT_BRTH_YR_NBR)
   AD_Patient <- read.dta13(sprintf("%s/AD/AD_Patient.dta", raw_iqvia_path))  %>% fselect(PATIENT_ID, PAT_BRTH_YR_NBR)
-  AA_product <- fread(sprintf("%s/AA_product.csv",        data_path))  %>% fselect(-product_name)
-  AD_product <- fread(sprintf("%s/AD_product.csv",        data_path))  %>% fselect(-product_name)
-  physician  <- fread(sprintf("%s/physician.csv",         data_path))  %>% fselect(PROVIDER_ID)
+  # Load cleaned product data
+  AA_product <- fread(sprintf("%s/AA_product.csv",         product_path))    %>% fselect(-product_name)
+  AD_product <- fread(sprintf("%s/AD_product.csv",         product_path))    %>% fselect(-product_name)
+  # Load cleaned physician data
+  physician  <- fread(sprintf("%s/physician.csv",          physician_path))  %>% fselect(PROVIDER_ID)
   
   for (yr in yr_list) {
     print(yr)
-    AA_prescript    <- load_and_clean_prescript("AA", yr, physician)
-    AD_prescript    <- load_and_clean_prescript("AD", yr, physician)
+    # Load raw prescription data
+    AA_prescript    <- load_and_clean_prescript("AA", yr, physician, AA_product, AD_product, AA_Patient, AD_Patient)
+    AD_prescript    <- load_and_clean_prescript("AD", yr, physician, AA_product, AD_product, AA_Patient, AD_Patient)
     prescript       <- append_prescript(AA_prescript, AD_prescript)
     rm(AA_prescript, AD_prescript)  # Release memory
     prescript       <- identify_red_flag(prescript)
@@ -23,7 +26,7 @@ main <- function() {
   }
 }
 
-load_and_clean_prescript <- function(drug_type, yr, physician) {
+load_and_clean_prescript <- function(drug_type, yr, physician, AA_product, AD_product, AA_Patient, AD_Patient) {
   # Load data
   prescript <- read.dta13(sprintf("%s/%s/%s_FactRx%s.dta", raw_iqvia_path, drug_type, drug_type, yr))
   

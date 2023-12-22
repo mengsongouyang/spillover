@@ -1,5 +1,5 @@
-output_table <- function(data, caption, path, filename, include.rownames = F) {
-  tab <- xtable(data, caption = caption)
+output_table <- function(data, caption, digits = 3, path, filename, include.rownames = F) {
+  tab <- xtable(data, caption = caption, digits = digits)
   
   print(tab, 
         file              = sprintf("%s/%s.tex", path, filename), 

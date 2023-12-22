@@ -1,1 +1,1 @@
-This directory stores codes that gets the tables.
+This directory stores codes to get the tables.

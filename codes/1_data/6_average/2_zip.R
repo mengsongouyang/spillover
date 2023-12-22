@@ -5,16 +5,16 @@ print(sprintf("Start: %s", message))
 
 main <- function(specialty_label) {
   # Load data
-  phy_spec   <- fread(sprintf("%s/physician.csv",  physician_path))
-  phy_cohort <- fread(sprintf("%s/phy_cohort.csv", cohort_path))
+  phy_spec   <- fread(sprintf("%s/physician.csv",  physician_path))  # Cleaned physician data
+  phy_cohort <- fread(sprintf("%s/phy_cohort.csv", cohort_path))     # Cleaned cohort data
   
   print(specialty_label)
   for (yr in yr_list) {
     print(yr)
     
     # Load data
-    prov_zip        <- fread(sprintf("%s/provider/%s.csv", location_path,        yr))
-    phy_n_prescript <- fread(sprintf("%s/%s.csv",          phy_n_prescript_path, yr))
+    prov_zip        <- fread(sprintf("%s/provider/%s.csv", location_path,        yr))  # Cleaned provider zip
+    phy_n_prescript <- fread(sprintf("%s/%s.csv",          phy_n_prescript_path, yr))  # Cleaned num of prescriptions 
     
     # Keep physicians of certain specialties
     if (specialty_label == "psych") {

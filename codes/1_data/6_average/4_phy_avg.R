@@ -17,8 +17,11 @@ main <- function(specialty_label) {
     print(yr)
     
     # Load data
+    # Cleaned num of prescriptions
     phy_n_prescript <- fread(sprintf("%s/%s.csv",          phy_n_prescript_path, yr))
+    # Provider zip
     prov_zip        <- fread(sprintf("%s/provider/%s.csv", location_path,        yr))
+    # Zip sum, (cohort, zip) sum, and cohort sum
     zip_sum         <- fread(sprintf("%s/%s/%s.csv",       zip_sum_path,         specialty_label, yr))
     CZ_sum          <- fread(sprintf("%s/%s/CZ_%s.csv",    cohort_sum_path,      specialty_label, yr))
     C_sum           <- fread(sprintf("%s/%s/C_%s.csv",     cohort_sum_path,      specialty_label, yr))

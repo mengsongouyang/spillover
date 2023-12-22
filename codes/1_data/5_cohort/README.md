@@ -1,1 +1,1 @@
-This directory stores codes that gets the cohort of each physician.
+This directory stores codes that get the cohort of each physician.

@@ -4,9 +4,9 @@ message <- "Keep only physicians in the provider sample."
 print(sprintf("Start: %s", message))
 
 main <- function() {
-  # Load data
-  AA_Provider <- fread(sprintf("%s/AA/AA_Provider.csv", raw_iqvia_path))
-  AD_Provider <- fread(sprintf("%s/AD/AD_Provider.csv", raw_iqvia_path))
+  # Load provider characteristics data
+  AA_Provider <- read_dta(sprintf("%s/AA/AA_Provider.dta", raw_iqvia_path))
+  AD_Provider <- read_dta(sprintf("%s/AD/AD_Provider.dta", raw_iqvia_path))
   
   # Append data
   provider  <- append_provider(AA_Provider, AD_Provider)

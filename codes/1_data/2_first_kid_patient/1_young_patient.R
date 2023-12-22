@@ -3,7 +3,7 @@
 # within the year range available (2006-2018).
 
 message <- "Get the list of young patients."
-print(sprintf("Start: %s"), message)
+print(sprintf("Start: %s", message))
 
 main <- function(drug_type) {
   print(sprintf("Drug type: %s", drug_type))
@@ -21,4 +21,4 @@ main <- function(drug_type) {
 main("AD")
 main("AA")
 
-print(sprintf("Finish: %s"), message)
+print(sprintf("Finish: %s", message))

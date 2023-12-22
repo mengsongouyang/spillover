@@ -6,6 +6,7 @@ print(sprintf("Start: %s", message))
 main <- function() {
   med_year_l <- 1966  # 1966 is included as an extreme year
   med_year_h <- 2014  # 2014 is excluded from the extreme year
+  
   for (specialty_label in specialty_label_list) {
     print(specialty_label)
     
@@ -36,6 +37,12 @@ clean_data <- function(data, med_year_l, med_year_h) {
 get_residuals <- function(data, specialty_label) {
   # Get residuals
   
+  if (specialty_label == "psych") {
+    specialty_name <- "Psychiatrists"
+  } else if (specialty_label == "nonpsych") {
+    specialty_name <- "Non-psychiatrists"
+  } 
+  
   # Any red-flag
   reg_res_red <- lm("red_zip ~ red_cohort + red_spill", data)
   data <- data  %>%
@@ -45,7 +52,7 @@ get_residuals <- function(data, specialty_label) {
   dep_mean <- round(mean(reg_res_red$model$red_zip), 3)
   
   stargazer(reg_res_red, 
-            title                  = "Zip Avg on Training and Spillover", 
+            title                  = sprintf("Zip Avg on Training and Spillover (%s)", specialty_name), 
             out                    = sprintf("%s/Table2_%s.tex", results_path, specialty_label), 
             dep.var.labels.include = F, 
             covariate.labels       = c("Training", "Spillover"), 
@@ -100,7 +107,8 @@ get_red_tables <- function(data, specialty_label) {
               "PAT_ZIP3"    = "Patient Zip3", 
               "PROVIDER_ID" = "Physician", 
               "patient_age" = "Patient Age", 
-              "femaleTRUE"  = "Female Patient")
+              "femaleTRUE"  = "Female Patient", 
+              "prov_zip3"   = "Physician Zip3")
   
   myOrder <- c("Zip Residuals", "Training", "Spillover")
   
@@ -110,17 +118,18 @@ get_red_tables <- function(data, specialty_label) {
     panel <- "B"
   }
   
-  etable(list(reg1, reg2, reg3),
+  tab <- etable(list(reg1, reg2, reg3),
          drop      = "Const",
          dict      = myDict,
          order     = myOrder,
          file      = sprintf("%s/Table3%s.tex", results_path, panel),
          replace   = T,
          title     = sprintf("Any red-flag (%s)", specialty_name),
-         digits    = "r3",
          style.tex = style.tex(tpt = TRUE),
          fitstat   = c("n", "my", "ar2"), 
+         digits    = "r3",
          extralines = )
+  print(tab)
 }
 
 get_each_type_tables <- function(data, specialty_label) {
@@ -145,9 +154,9 @@ get_each_type_tables <- function(data, specialty_label) {
            spill   = tri_spill)
   
   ben_data <- data  %>%
-    rename(zip_res = FA_zip_res, 
-           cohort  = FA_cohort, 
-           spill   = FA_spill)
+    rename(zip_res = ben_zip_res, 
+           cohort  = ben_cohort, 
+           spill   = ben_spill)
   
   poly_data <- data  %>%
     rename(zip_res = poly_zip_res, 
@@ -172,7 +181,8 @@ get_each_type_tables <- function(data, specialty_label) {
               "PROVIDER_ID"      = "Physician", 
               "PAT_ZIP3"         = "Patient Zip3", 
               "patient_age"      = "Patient Age", 
-              "femaleTRUE"       = "Female Patient")
+              "femaleTRUE"       = "Female Patient", 
+              "prov_zip3"        = "Physician Zip3")
   
   myOrder <- c("Zip Residuals", "Training", "Spillover")
   
@@ -182,17 +192,18 @@ get_each_type_tables <- function(data, specialty_label) {
     panel <- "B"
   }
   
-  etable(list(reg1, reg2, reg3, reg4),
+  tab <- etable(list(reg1, reg2, reg3, reg4),
          drop      = "Const",
          dict      = myDict,
          order     = myOrder,
          file      = sprintf("%s/Table4%s.tex", results_path, panel),
          replace   = T,
          title     = sprintf("Each type of prescription (%s)", specialty_name),
-         digits    = "r3",
          style.tex = style.tex(tpt = TRUE),
          fitstat   = c("n", "my", "ar2"), 
+         digits    = "r3",
          extralines = )
+  print(tab)
 }
 
 # Execute

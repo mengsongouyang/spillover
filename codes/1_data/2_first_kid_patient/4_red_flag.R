@@ -58,9 +58,13 @@ append_prescript <- function() {
  }
 
 clean_prescript <- function(prescript, patient) {
+  patient <- patient  %>%
+    fmutate(PATIENT_ID = as.numeric(PATIENT_ID))
+  
   prescript <- prescript  %>%
     filter(first_appear >= as.Date("2006-07-01"))  %>%
     fselect(-PAT_BRTH_YR_NBR)  %>%
+    fmutate(PATIENT_ID = as.numeric(PATIENT_ID))  %>%
     left_join(patient, by = "PATIENT_ID")  %>%
     fmutate(service_yr       = as.numeric(format(SVC_DT, "%Y")),
             patient_age      = service_yr - PAT_BRTH_YR_NBR,

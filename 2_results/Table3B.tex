@@ -1,0 +1,39 @@
+
+\begin{table}[htbp]
+   \centering
+   \begin{threeparttable}[b]
+      \caption{Any red-flag (Non-psychiatrists)}
+      \begin{tabular}{lccc}
+         \tabularnewline \midrule \midrule
+         Dependent Variable: & \multicolumn{3}{c}{Any red-flag}\\
+         Model:                  & (1)            & (2)            & (3)\\  
+         \midrule
+         \emph{Variables}\\
+         Zip Residuals           & 0.157$^{***}$  & 0.130$^{***}$  &   \\   
+                                 & (0.022)        & (0.012)        &   \\   
+         Training                & 0.804$^{***}$  & 0.177$^{***}$  & 0.176$^{***}$\\   
+                                 & (0.029)        & (0.026)        & (0.026)\\   
+         Spillover               & 0.108          & 0.386$^{***}$  & 0.486$^{***}$\\   
+                                 & (0.144)        & (0.095)        & (0.099)\\   
+         Patient Age             & -0.025$^{***}$ & -0.023$^{***}$ & -0.023$^{***}$\\   
+                                 & (0.000)        & (0.000)        & (0.000)\\   
+         Female Patient          & -0.005$^{***}$ & -0.007$^{***}$ & -0.007$^{***}$\\   
+                                 & (0.001)        & (0.001)        & (0.001)\\   
+         \midrule
+         \emph{Fixed-effects}\\
+         Year                    & Yes            & Yes            & Yes\\  
+         Patient Zip3            & Yes            & Yes            & Yes\\  
+         Physician               &                & Yes            & Yes\\  
+         \midrule
+         \emph{Fit statistics}\\
+         Observations            & 4,015,856      & 4,015,856      & 4,015,856\\  
+         Dependent variable mean & 0.52524        & 0.52524        & 0.52524\\  
+         Adjusted R$^2$          & 0.07491        & 0.28123        & 0.28112\\  
+         \midrule \midrule
+         \multicolumn{4}{l}{\emph{Clustered (Physician Zip3) standard-errors in parentheses}}\\
+         \multicolumn{4}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+      \end{tabular}
+   \end{threeparttable}
+\end{table}
+
+
