@@ -7,7 +7,7 @@ The data were purchased from IQVIA. IQVIA (formerly known as IMSQuintiles) is a 
 ## Files contained in this folder
 This section lists the files contained in this folder used for our analysis.
 
-### Prescriptions data 2006-2008
+### Prescriptions data 2006-2018
 - AD_FactRx`year`.dta (replace `year` by `2006`-`2018`)
 
 ### Patient characteristics data
