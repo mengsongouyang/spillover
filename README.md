@@ -1,6 +1,6 @@
 # Overview
 
-This replication file stores public data and all codes used for the paper _Spillovers and Training Effects on Mental Health Prescribing for Children_ by Currie, MacLeod, and Ouyang (2024).
+This replication file stores public data and all codes used for the paper [_Spillovers and Training Effects on Mental Health Prescribing for Children_](https://www.aeaweb.org/articles?id=10.1257/pandp.20241086&ArticleSearch%5Bwithin%5D%5Barticletitle%5D=1&ArticleSearch%5Bwithin%5D%5Barticleabstract%5D=1&ArticleSearch%5Bwithin%5D%5Bauthorlast%5D=1&ArticleSearch%5Bq%5D=spillover&JelClass%5Bvalue%5D=0&journal=8&from=j) by Currie, MacLeod, and Ouyang (_AEA Papers and Proceedings_, 2024, 114, 1-8.)
 
 # Description
 
